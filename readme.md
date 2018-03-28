@@ -54,9 +54,17 @@ chmod +x deploy.sh
 
 ```
 # Configure
-MYSQL_ROOT_PASSWORD="{{--Your Password--}}"
-MYSQL_NORMAL_USER="estuser"
-MYSQL_NORMAL_USER_PASSWORD="{{--Your Password--}}"
+# ======= MySQL =========
+MYSQL_ROOT_PASSWORD=""
+MYSQL_NORMAL_USER="regular-user"
+MYSQL_NORMAL_USER_PASSWORD=""
+# ======= GitLab =========
+GITLAB_USERNAME=""
+GITLAB_PASSWORD=""
+GITLAB_PROJECT_OWNER="cedesa"
+GITLAB_PROJECT_REPOSITORY_NAME=""
+GITLAB_PROJECT_FOLDER_NAME=""
+GITLAB_PROJECT_ROOT="/var/www/"
 ```
 
 3). Start install
