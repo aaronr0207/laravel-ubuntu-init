@@ -226,14 +226,18 @@ git clone https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@gitlab.com/${GITLAB_PROJ
 
 cd ${GITLAB_PROJECT_ROOT}${GITLAB_PROJECT_FOLDER_NAME}
 mkdir bootstrap/cache
-chown www:www -R ./
+
 chgrp -R www-data storage bootstrap/cache public
 chmod -R ug+rwx storage bootstrap/cache public
+chown www:www -R ./
 
 # Run Composer Update
 
 composer update
 
+chgrp -R www-data storage bootstrap/cache public
+chmod -R ug+rwx storage bootstrap/cache public
+chown www:www -R ./
 
 clear
 echo "--"
