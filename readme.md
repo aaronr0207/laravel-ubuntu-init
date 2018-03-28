@@ -152,4 +152,12 @@ Restart Nginx when you done:
 service nginx restart
 ```
 
+### 3. Setup .env and database
+
+Fill your `.env` file and execute:
+
+```
+php artisan migrate --seed
+```
+
 
