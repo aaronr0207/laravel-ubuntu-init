@@ -88,7 +88,7 @@ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 apt-get install -y --force-yes php7.1-cli php7.1 \
 php-pgsql php-sqlite3 php-gd php7.1-gd php-apcu \
 php-curl php7.1-mcrypt \
-php-imap php-mysql php-memcached php7.1-readline php-xdebug \
+php-imap php-mysql php7.1-mysql php-memcached php7.1-readline php-xdebug \
 php-mbstring php7.1-mbstring php-xml php7.1-xml php7.1-zip php7.1-intl php7.1-bcmath php-soap
 
 # Install Composer
@@ -226,6 +226,9 @@ git clone https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@gitlab.com/${GITLAB_PROJ
 
 cd ${GITLAB_PROJECT_ROOT}${GITLAB_PROJECT_FOLDER_NAME}
 mkdir bootstrap/cache
+mkdir -p storage/framework/cache
+mkdir storage/framework/views
+mkdir storage/framework/sessions
 
 chgrp -R www-data storage bootstrap/cache public
 chmod -R ug+rwx storage bootstrap/cache public
