@@ -36,14 +36,14 @@ This is a shell script for setting up Laravel Production environment on Ubuntu 1
 My Ubuntu 16.04
 
 ```
-wget https://raw.githubusercontent.com/summerblue/laravel-ubuntu-init/master/deploy-16.sh -O deploy.sh
+wget https://raw.githubusercontent.com/aaronr0207/laravel-ubuntu-init/master/deploy-16.sh -O deploy.sh
 chmod +x deploy.sh
 ```
 
 Ubuntu 14.04
 
 ```
-wget https://raw.githubusercontent.com/summerblue/laravel-ubuntu-init/master/deploy.sh
+wget https://raw.githubusercontent.com/aaronr0207/laravel-ubuntu-init/master/deploy.sh
 chmod +x deploy.sh
 ```
 
