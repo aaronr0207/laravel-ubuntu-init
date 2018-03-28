@@ -109,7 +109,7 @@ For example `/etc/nginx/sites-enabled/phphub.org`:
 
 ```
 server {
-    listen 80;
+    listen 8080;
     server_name {{---YOU-DOMAIN-NAME---}};
     root "{{---YOU-PROJECT-FOLDER---}}";
 
@@ -124,8 +124,8 @@ server {
     location = /favicon.ico { access_log off; log_not_found off; }
     location = /robots.txt  { access_log off; log_not_found off; }
 
-    access_log /data/log/nginx/{{---YOU-PROJECT-NAME---}}-access.log;
-    error_log  /data/log/nginx/{{---YOU-PROJECT-NAME---}}-error.log error;
+    access_log /var/log/nginx/{{---YOU-PROJECT-NAME---}}-access.log;
+    error_log  /var/log/nginx/{{---YOU-PROJECT-NAME---}}-error.log error;
 
     sendfile off;
 
