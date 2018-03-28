@@ -6,9 +6,18 @@ export DEBIAN_FRONTEND=noninteractive
 [ $(id -u) != "0" ] && { echo "${CFAILURE}Error: You must be root to run this script${CEND}"; exit 1; }
 
 # Configure
+
+# ======= MySQL ==========
 MYSQL_ROOT_PASSWORD=""
-MYSQL_NORMAL_USER="estuser"
+MYSQL_NORMAL_USER="regular-user"
 MYSQL_NORMAL_USER_PASSWORD=""
+# ======= GitLab =========
+GITLAB_USERNAME=""
+GITLAB_PASSWORD=""
+GITLAB_PROJECT_OWNER="cedesa"
+GITLAB_PROJECT_REPOSITORY_NAME=""
+GITLAB_PROJECT_FOLDER_NAME=""
+GITLAB_PROJECT_ROOT="/var/www/"
 
 # Check if password is defined
 if [[ "$MYSQL_ROOT_PASSWORD" == "" ]]; then
@@ -22,9 +31,14 @@ fi
 
 # Force Locale
 
-export LC_ALL="en_US.UTF-8"
-echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
-locale-gen en_US.UTF-8
+export LC_ALL="es_ES.UTF-8"
+echo "LC_ALL=es_ES.UTF-8" >> /etc/default/locale
+locale-gen es_ES.UTF-8
+
+# Force Date and Time Sync
+
+timedatectl set-timezone Europe/Madrid
+timedatectl set-ntp on
 
 # Add www user and group
 addgroup www
@@ -152,6 +166,10 @@ apt-get install -y nodejs
 /usr/bin/npm install -g gulp
 /usr/bin/npm install -g bower
 
+# Basic Node Packages
+
+npm install forever -g 
+
 # Install SQLite
 
 apt-get install -y sqlite3 libsqlite3-dev
@@ -195,6 +213,25 @@ sed -i "s/#START=yes/START=yes/" /etc/default/beanstalkd
 /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
 /sbin/mkswap /var/swap.1
 /sbin/swapon /var/swap.1
+
+# Create Web Root Directory for www user
+
+mkdir ${GITLAB_PROJECT_ROOT}
+
+# Repository Clone
+
+git clone https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@gitlab.com/${GITLAB_PROJECT_OWNER}/${GITLAB_PROJECT_REPOSITORY_NAME}.git ${GITLAB_PROJECT_ROOT}${GITLAB_PROJECT_FOLDER_NAME}
+
+# Set Project Permission
+
+cd ${GITLAB_PROJECT_ROOT}${GITLAB_PROJECT_FOLDER_NAME}
+chgrp -R www-data storage bootstrap/cache public
+chmod -R ug+rwx storage bootstrap/cache public
+
+# Run Composer Update
+
+composer update
+
 
 clear
 echo "--"
