@@ -11,6 +11,8 @@ export DEBIAN_FRONTEND=noninteractive
 MYSQL_ROOT_PASSWORD=""
 MYSQL_NORMAL_USER="regular-user"
 MYSQL_NORMAL_USER_PASSWORD=""
+# ======= Project ========
+PROJECT_DB_NAME=""
 # ======= GitLab =========
 GITLAB_USERNAME=""
 GITLAB_PASSWORD=""
@@ -18,6 +20,8 @@ GITLAB_PROJECT_OWNER="cedesa"
 GITLAB_PROJECT_REPOSITORY_NAME=""
 GITLAB_PROJECT_FOLDER_NAME=""
 GITLAB_PROJECT_ROOT="/var/www/"
+
+
 
 # Check if password is defined
 if [[ "$MYSQL_ROOT_PASSWORD" == "" ]]; then
@@ -216,7 +220,17 @@ sed -i "s/#START=yes/START=yes/" /etc/default/beanstalkd
 
 # Create Web Root Directory for www user
 
-mkdir ${GITLAB_PROJECT_ROOT}
+mkdir -p ${GITLAB_PROJECT_ROOT}
+
+# Configure and Install PHPMyAdmin
+
+debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install boolean true'
+debconf-set-selections <<< 'phpmyadmin phpmyadmin/app-password-confirm password ${MYSQL_ROOT_PASSWORD}'
+debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/admin-pass password ${MYSQL_ROOT_PASSWORD}}'
+debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/app-pass password ${MYSQL_ROOT_PASSWORD}'
+debconf-set-selections <<< 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect'
+
+apt-get -y install phpmyadmin
 
 # Repository Clone
 
@@ -241,6 +255,12 @@ composer update
 chgrp -R www-data storage bootstrap/cache public
 chmod -R ug+rwx storage bootstrap/cache public
 chown www:www -R ./
+
+# Create project database
+
+mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS ${PROJECT_DB_NAME}"
+
+
 
 clear
 echo "--"
