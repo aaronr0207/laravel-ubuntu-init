@@ -11,13 +11,13 @@
 
 ## Intro
 
-This is a shell script for setting up Laravel Production environment on Ubuntu 14.04 system （ [ for Ubuntu 16](https://github.com/summerblue/laravel-ubuntu-init/blob/master/deploy-16.sh) ).
+This is a shell script for setting up Laravel Production environment on Ubuntu 16 system.
 
 > [中文文档](https://phphub.org/topics/2814)
 
 ## Software list
 
-* Ubuntu 14.04 / [Ubuntu 16 请使用这个脚本](https://github.com/summerblue/laravel-ubuntu-init/blob/master/deploy-16.sh)
+* Ubuntu 16
 * Git
 * PHP 7.1
 * Nginx
@@ -28,6 +28,7 @@ This is a shell script for setting up Laravel Production environment on Ubuntu 1
 * Redis
 * Memcached
 * Beanstalkd
+* PHPMyAdmin
 
 ## Installation
 
@@ -39,14 +40,6 @@ My Ubuntu 16.04
 wget https://raw.githubusercontent.com/aaronr0207/laravel-ubuntu-init/master/deploy-16.sh -O deploy.sh
 chmod +x deploy.sh
 ```
-
-Ubuntu 14.04
-
-```
-wget https://raw.githubusercontent.com/aaronr0207/laravel-ubuntu-init/master/deploy.sh
-chmod +x deploy.sh
-```
-
 
 2). Config MySQL password
 
