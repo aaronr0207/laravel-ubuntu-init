@@ -143,6 +143,22 @@ server {
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include        fastcgi_params;
     }
+    location /phpmyadmin {
+        root /usr/share/;
+        index index.php;
+        try_files $uri $uri/ =404;
+
+      location ~ ^/phpmyadmin/(doc|sql|setup)/ {
+          deny all;
+      }
+
+      location ~ /phpmyadmin/(.+\.php)$ {
+          fastcgi_pass 127.0.0.1:9000;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          include fastcgi_params;
+          include snippets/fastcgi-php.conf;
+      }
+    }
 }
 ```
 
